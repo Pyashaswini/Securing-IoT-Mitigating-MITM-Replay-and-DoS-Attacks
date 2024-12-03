@@ -1,0 +1,17 @@
+
+/home/pi/credentials.txt
+user1,password1,/home/pi/patient_data/user1
+user2,password2,/home/pi/patient_data/user2
+
+/home/pi/patient_data/user1/patient_report1.txt
+Patient: John Doe
+Age: 45
+Diagnosis: Hypertension
+Treatment: Medication XYZ
+
+/home/pi/patient_data/user2/patient_record2.txt
+Patient: Jane Smith
+Age: 30
+Diagnosis: Asthma
+Treatment: Inhaler ABC
+
