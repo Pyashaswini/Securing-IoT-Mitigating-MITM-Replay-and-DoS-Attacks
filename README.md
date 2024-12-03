@@ -58,6 +58,7 @@ The server was unable to differentiate between legitimate and malicious requests
 Detection and Prevention:
 
 Detection: Suspicious activity was flagged by tracking the number of connections from each IP address.
+
 Prevention: Rate limiting was implemented to block IPs exceeding a threshold of connections, reducing server strain and mitigating the attack.
 
 2. Man-in-the-Middle (MITM) Attack
@@ -68,6 +69,12 @@ What Was Achieved:
 
 ARP spoofing allowed the attacker to intercept client-server communication, including login credentials and file transfers.
 The captured files were readable, and login credentials were successfully intercepted.
+
+Detection and Prevention:
+
+Detection: The system detected MITM attacks by filtering suspicious IP addresses, monitoring for unusual traffic patterns, and verifying the integrity of received data.
+
+Prevention: By implementing AES encryption for sensitive data and ensuring server-side authentication, the system successfully prevented MITM attacks, ensuring that even intercepted data would remain inaccessible to unauthorized parties.
 
 Outcome and Real-World Implication:
 
@@ -82,9 +89,11 @@ What Was Achieved:
 
 The attacker successfully captured network packets during the client-server communication.
 However, replaying the captured packets was unsuccessful due to session-specific identifiers, sequence number mismatches, or timing issues, preventing the server from accepting the replayed requests.
+
 Detection and Prevention:
 
 Detection: Detecting replay attacks could be done by tracking timestamps or session tokens to ensure that incoming messages are fresh.
+
 Prevention: Implementing timestamp checks or session-based validation would prevent replay attacks by rejecting outdated or repeated messages.
 
 
