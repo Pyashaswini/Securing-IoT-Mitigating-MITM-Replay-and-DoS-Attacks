@@ -1,7 +1,7 @@
 import socket
 
 def client_program():
-    host = '192.168.165.135'  # IP address of the server Raspberry Pi
+    host = ''  # IP address of the server Raspberry Pi
     port = 5000  # same port as the server
 
     client_socket = socket.socket()
