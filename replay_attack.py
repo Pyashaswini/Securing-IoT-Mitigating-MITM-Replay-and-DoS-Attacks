@@ -1,7 +1,7 @@
 from scapy.all import sniff, send, IP, TCP, Raw, get_if_list
 
-client_ip = '192.168.165.40'  # Replace with the client's IP
-server_ip = '192.168.165.135'  # Replace with the server's IP
+client_ip = ''  # Replace with the client's IP
+server_ip = ''  # Replace with the server's IP
 
 def filter_data_packets(packet, seen_payloads):
     # Ensure it's a TCP packet between client and server with data payload
