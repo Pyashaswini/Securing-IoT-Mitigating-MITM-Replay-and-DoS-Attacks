@@ -24,16 +24,23 @@ Role: Monitors the server-client communication and analyzes attacks using VNC, W
 Attack Mechanisms
 
 Denial-of-Service (DoS): A Python script floods the server with excessive requests, causing it to become unresponsive.
+
 Man-in-the-Middle (MITM): ARP spoofing redirects communication between the client and server through the attacker, enabling them to intercept data.
+
 Replay: The attacker captures and replays previously sent packets to simulate legitimate requests, potentially gaining unauthorized access.
+
 Network Setup
+
 The devices communicate over a shared wireless network. During the attacks, IP addresses and MAC addresses are manipulated to simulate vulnerabilities that attackers could exploit.
 
 Communication Flow
 
 Raspberry Pi 1 (Server): Configured to receive client requests and provide requested data after successful authentication.
+
 Raspberry Pi 2 (Client): Initiates requests to the server (such as login credentials or file access).
+
 Laptop 1 (Kali Linux VM - Attacker): Performs ARP spoofing to intercept communication between the client and server. It also executes DoS and MITM attacks.
+
 Laptop 2: Used for monitoring communication between the server and client through tools like VNC and Wireshark.
 
 
@@ -44,8 +51,10 @@ Attack Setup and Goals
 Objective: The goal of the DoS attack was to overwhelm the server by flooding it with excessive requests, causing it to become unresponsive to legitimate traffic.
 
 What Was Achieved:
+
 A Python script was used to send an overwhelming number of requests to the server.
 The server was unable to differentiate between legitimate and malicious requests, resulting in temporary unresponsiveness.
+
 Detection and Prevention:
 
 Detection: Suspicious activity was flagged by tracking the number of connections from each IP address.
@@ -59,6 +68,7 @@ What Was Achieved:
 
 ARP spoofing allowed the attacker to intercept client-server communication, including login credentials and file transfers.
 The captured files were readable, and login credentials were successfully intercepted.
+
 Outcome and Real-World Implication:
 
 In a real-world environment, secure transmission (e.g., SSH or TLS encryption) would protect the data, making intercepted information unreadable without the proper decryption keys.
@@ -81,11 +91,19 @@ Prevention: Implementing timestamp checks or session-based validation would prev
 Conclusion
 
 DoS Attack: We successfully overwhelmed the server by flooding it with requests. The attack was mitigated by implementing rate limiting, which blocked excessive connections.
+
 MITM Attack: Sensitive information such as usernames, passwords, and files were intercepted, but in a real-world scenario, secure transmission methods (e.g., SSH) would protect the data from unauthorized access.
+
 Replay Attack: While we captured legitimate communication, the attack failed due to session handling and timing issues. In a real-world scenario, using timestamps or session identifiers would help detect and prevent replay attacks.
+
 Requirements
+
 Raspberry Pi devices (or any device capable of running Python)
+
 Kali Linux VM for performing attacks
+
 Python (for attack scripts)
+
 Wireshark or similar tools for packet analysis
+
 VNC or other remote desktop tools for monitoring communication
