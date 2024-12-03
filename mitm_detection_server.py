@@ -1,7 +1,7 @@
 import socket
 import os
 # List of allowed IP addresses (stored server-side)
-ALLOWED_IPS = ['192.168.165.40', '192.168.165.187']  # Add allowed IPs
+ALLOWED_IPS = ['', '']  # Add allowed IPs
 
 # Function to authenticate user
 def authenticate_user(username, password):
