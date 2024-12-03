@@ -1,118 +1,109 @@
-System Setup and Attack Analysis
+# System Setup and Attack Analysis
 
-Overview
+## Overview
 
-This project demonstrates the setup and analysis of three types of attacks: Denial-of-Service (DoS), Man-in-the-Middle (MITM), and Replay. The setup consists of two Raspberry Pi devices acting as the client and server, while a third system (Kali Linux VM) simulates the attacker. The goal is to explore how these attacks work, what they can achieve, and how to detect and prevent them in a real-world scenario.
+This project demonstrates the setup and analysis of three types of attacks: 
+1. **Denial-of-Service (DoS)**  
+2. **Man-in-the-Middle (MITM)**  
+3. **Replay**  
 
-System Setup
+The setup consists of two Raspberry Pi devices acting as the client and server, while a third system (Kali Linux VM) simulates the attacker. The goal is to explore the mechanics of these attacks, their potential impact, and the methods to detect and prevent them in real-world scenarios.
 
-Devices
+---
 
-Raspberry Pi 1 (Server):
-Role: Hosts data and handles client requests, such as authentication and file serving.
+## Devices
 
-Raspberry Pi 2 (Client):
-Role: Sends legitimate requests to the server (e.g., login credentials, file access).
+- **Raspberry Pi 1 (Server)**  
+  - **Role**: Hosts data and handles client requests (e.g., authentication, file serving).
 
-Laptop 1 (Kali Linux VM - Attacker):
-Role: Simulates the attacker and executes DoS, MITM, and Replay attacks.
+- **Raspberry Pi 2 (Client)**  
+  - **Role**: Sends legitimate requests to the server (e.g., login credentials, file access).
 
-Laptop 2 (Monitoring):
-Role: Monitors the server-client communication and analyzes attacks using VNC, Wireshark, or other monitoring tools.
+- **Laptop 1 (Kali Linux VM - Attacker)**  
+  - **Role**: Simulates the attacker and executes DoS, MITM, and Replay attacks.
 
+- **Laptop 2 (Monitoring)**  
+  - **Role**: Monitors server-client communication and analyzes attacks using tools like VNC and Wireshark.
 
-Attack Mechanisms
+---
 
-Denial-of-Service (DoS): A Python script floods the server with excessive requests, causing it to become unresponsive.
+## Attack Mechanisms
 
-Man-in-the-Middle (MITM): ARP spoofing redirects communication between the client and server through the attacker, enabling them to intercept data.
+1. **Denial-of-Service (DoS)**  
+   A Python script floods the server with excessive requests, making it unresponsive to legitimate traffic.
 
-Replay: The attacker captures and replays previously sent packets to simulate legitimate requests, potentially gaining unauthorized access.
+2. **Man-in-the-Middle (MITM)**  
+   ARP spoofing redirects communication between the client and server through the attacker, enabling interception of data.
 
-Network Setup
+3. **Replay**  
+   The attacker captures and replays previously sent packets to simulate legitimate requests, potentially gaining unauthorized access.
 
-The devices communicate over a shared wireless network. During the attacks, IP addresses and MAC addresses are manipulated to simulate vulnerabilities that attackers could exploit.
+---
 
-Communication Flow
+## Network Setup
 
-Raspberry Pi 1 (Server): Configured to receive client requests and provide requested data after successful authentication.
+The devices communicate over a shared wireless network. During attacks, IP and MAC addresses are manipulated to simulate vulnerabilities exploited by attackers.
 
-Raspberry Pi 2 (Client): Initiates requests to the server (such as login credentials or file access).
+---
 
-Laptop 1 (Kali Linux VM - Attacker): Performs ARP spoofing to intercept communication between the client and server. It also executes DoS and MITM attacks.
+## Communication Flow
 
-Laptop 2: Used for monitoring communication between the server and client through tools like VNC and Wireshark.
+- **Raspberry Pi 1 (Server)**: Receives client requests and provides requested data upon successful authentication.  
+- **Raspberry Pi 2 (Client)**: Initiates requests to the server (e.g., login credentials, file access).  
+- **Laptop 1 (Kali Linux VM - Attacker)**: Executes ARP spoofing, DoS, and MITM attacks.  
+- **Laptop 2 (Monitoring)**: Observes and analyzes communication using tools like VNC and Wireshark.  
 
+---
 
-Attack Setup and Goals
+## Attack Setup and Goals
 
-1. Denial-of-Service (DoS) Attack
-   
-Objective: The goal of the DoS attack was to overwhelm the server by flooding it with excessive requests, causing it to become unresponsive to legitimate traffic.
+### 1. Denial-of-Service (DoS) Attack
 
-What Was Achieved:
+- **Objective**: Overwhelm the server with excessive requests to render it unresponsive to legitimate traffic.  
+- **What Was Achieved**:  
+  - Flooded the server with requests using a Python script.  
+  - Server became temporarily unresponsive.  
+- **Detection and Prevention**:  
+  - **Detection**: Tracked excessive connections from individual IP addresses.  
+  - **Prevention**: Implemented rate limiting to block IPs exceeding a set threshold.
 
-A Python script was used to send an overwhelming number of requests to the server.
-The server was unable to differentiate between legitimate and malicious requests, resulting in temporary unresponsiveness.
+---
 
-Detection and Prevention:
+### 2. Man-in-the-Middle (MITM) Attack
 
-Detection: Suspicious activity was flagged by tracking the number of connections from each IP address.
+- **Objective**: Intercept sensitive information (e.g., usernames, passwords, and files) exchanged between the client and server.  
+- **What Was Achieved**:  
+  - ARP spoofing allowed interception of communication, capturing login credentials and files.  
+- **Detection and Prevention**:  
+  - **Detection**: Monitored suspicious traffic patterns and verified data integrity.  
+  - **Prevention**: Implemented AES encryption and server-side authentication to ensure intercepted data was unreadable.  
 
-Prevention: Rate limiting was implemented to block IPs exceeding a threshold of connections, reducing server strain and mitigating the attack.
+---
 
-2. Man-in-the-Middle (MITM) Attack
-   
-Objective: The aim was to intercept sensitive information, such as usernames, passwords, and files, being exchanged between the client and server.
+### 3. Replay Attack
 
-What Was Achieved:
+- **Objective**: Capture legitimate communication (e.g., login requests or file access) and replay it to simulate valid actions.  
+- **What Was Achieved**:  
+  - Captured packets during communication.  
+  - Replaying packets failed due to session-specific identifiers and timing mismatches.  
+- **Detection and Prevention**:  
+  - **Detection**: Used timestamps and session tokens to ensure message freshness.  
+  - **Prevention**: Rejected outdated or repeated messages via timestamp and session validation.  
 
-ARP spoofing allowed the attacker to intercept client-server communication, including login credentials and file transfers.
-The captured files were readable, and login credentials were successfully intercepted.
+---
 
-Detection and Prevention:
+## Conclusion
 
-Detection: The system detected MITM attacks by filtering suspicious IP addresses, monitoring for unusual traffic patterns, and verifying the integrity of received data.
+- **DoS Attack**: Successfully overwhelmed the server but mitigated using rate limiting to block excessive connections.  
+- **MITM Attack**: Intercepted sensitive information; encryption and secure protocols (e.g., SSH) can protect against such attacks in real-world scenarios.  
+- **Replay Attack**: While communication was captured, replay attempts failed due to session-specific validation.  
 
-Prevention: By implementing AES encryption for sensitive data and ensuring server-side authentication, the system successfully prevented MITM attacks, ensuring that even intercepted data would remain inaccessible to unauthorized parties.
+---
 
-Outcome and Real-World Implication:
+## Requirements
 
-In a real-world environment, secure transmission (e.g., SSH or TLS encryption) would protect the data, making intercepted information unreadable without the proper decryption keys.
-The project highlights the importance of implementing encryption to safeguard sensitive information against MITM attacks.
-
-3. Replay Attack
-   
-Objective: The goal was to capture legitimate messages (e.g., login requests or file access) and replay them to the server, simulating a legitimate action to gain unauthorized access or repeat actions.
-
-What Was Achieved:
-
-The attacker successfully captured network packets during the client-server communication.
-However, replaying the captured packets was unsuccessful due to session-specific identifiers, sequence number mismatches, or timing issues, preventing the server from accepting the replayed requests.
-
-Detection and Prevention:
-
-Detection: Detecting replay attacks could be done by tracking timestamps or session tokens to ensure that incoming messages are fresh.
-
-Prevention: Implementing timestamp checks or session-based validation would prevent replay attacks by rejecting outdated or repeated messages.
-
-
-Conclusion
-
-DoS Attack: We successfully overwhelmed the server by flooding it with requests. The attack was mitigated by implementing rate limiting, which blocked excessive connections.
-
-MITM Attack: Sensitive information such as usernames, passwords, and files were intercepted, but in a real-world scenario, secure transmission methods (e.g., SSH) would protect the data from unauthorized access.
-
-Replay Attack: While we captured legitimate communication, the attack failed due to session handling and timing issues. In a real-world scenario, using timestamps or session identifiers would help detect and prevent replay attacks.
-
-Requirements
-
-Raspberry Pi devices (or any device capable of running Python)
-
-Kali Linux VM for performing attacks
-
-Python (for attack scripts)
-
-Wireshark or similar tools for packet analysis
-
-VNC or other remote desktop tools for monitoring communication
+- Raspberry Pi devices (or equivalent devices capable of running Python)  
+- Kali Linux VM for attack simulations  
+- Python (for attack scripts)  
+- Wireshark or similar tools for packet analysis  
+- VNC or other remote desktop tools for monitoring communication  
