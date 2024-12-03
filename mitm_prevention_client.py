@@ -21,7 +21,7 @@ def encrypt_data(data, key):
 
 # Client program
 def client_program():
-    host = '192.168.165.135'  # Server IP address
+    host = ''  # Server IP address
     port = 5000  # Port number
 
     client_socket = socket.socket()
