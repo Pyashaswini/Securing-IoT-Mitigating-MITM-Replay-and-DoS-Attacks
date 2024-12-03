@@ -1,10 +1,13 @@
 System Setup and Attack Analysis
 
 Overview
+
 This project demonstrates the setup and analysis of three types of attacks: Denial-of-Service (DoS), Man-in-the-Middle (MITM), and Replay. The setup consists of two Raspberry Pi devices acting as the client and server, while a third system (Kali Linux VM) simulates the attacker. The goal is to explore how these attacks work, what they can achieve, and how to detect and prevent them in a real-world scenario.
 
 System Setup
+
 Devices
+
 Raspberry Pi 1 (Server):
 Role: Hosts data and handles client requests, such as authentication and file serving.
 
@@ -19,6 +22,7 @@ Role: Monitors the server-client communication and analyzes attacks using VNC, W
 
 
 Attack Mechanisms
+
 Denial-of-Service (DoS): A Python script floods the server with excessive requests, causing it to become unresponsive.
 Man-in-the-Middle (MITM): ARP spoofing redirects communication between the client and server through the attacker, enabling them to intercept data.
 Replay: The attacker captures and replays previously sent packets to simulate legitimate requests, potentially gaining unauthorized access.
@@ -26,6 +30,7 @@ Network Setup
 The devices communicate over a shared wireless network. During the attacks, IP addresses and MAC addresses are manipulated to simulate vulnerabilities that attackers could exploit.
 
 Communication Flow
+
 Raspberry Pi 1 (Server): Configured to receive client requests and provide requested data after successful authentication.
 Raspberry Pi 2 (Client): Initiates requests to the server (such as login credentials or file access).
 Laptop 1 (Kali Linux VM - Attacker): Performs ARP spoofing to intercept communication between the client and server. It also executes DoS and MITM attacks.
@@ -35,6 +40,7 @@ Laptop 2: Used for monitoring communication between the server and client throug
 Attack Setup and Goals
 
 1. Denial-of-Service (DoS) Attack
+   
 Objective: The goal of the DoS attack was to overwhelm the server by flooding it with excessive requests, causing it to become unresponsive to legitimate traffic.
 
 What Was Achieved:
@@ -46,6 +52,7 @@ Detection: Suspicious activity was flagged by tracking the number of connections
 Prevention: Rate limiting was implemented to block IPs exceeding a threshold of connections, reducing server strain and mitigating the attack.
 
 2. Man-in-the-Middle (MITM) Attack
+   
 Objective: The aim was to intercept sensitive information, such as usernames, passwords, and files, being exchanged between the client and server.
 
 What Was Achieved:
@@ -58,6 +65,7 @@ In a real-world environment, secure transmission (e.g., SSH or TLS encryption) w
 The project highlights the importance of implementing encryption to safeguard sensitive information against MITM attacks.
 
 3. Replay Attack
+   
 Objective: The goal was to capture legitimate messages (e.g., login requests or file access) and replay them to the server, simulating a legitimate action to gain unauthorized access or repeat actions.
 
 What Was Achieved:
