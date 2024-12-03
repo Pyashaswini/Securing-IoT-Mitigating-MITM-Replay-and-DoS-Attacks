@@ -2,8 +2,8 @@ from scapy.all import sniff, IP, TCP, Raw, get_if_list
 import os
 
 # Define the IP addresses of the client and server
-client_ip = '192.168.165.40'
-server_ip = '192.168.165.135'
+client_ip = ''
+server_ip = ''
 
 # Directory to save captured files
 output_dir = "captured_files"
