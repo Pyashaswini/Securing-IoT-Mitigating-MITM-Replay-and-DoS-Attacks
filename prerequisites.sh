@@ -1,3 +1,6 @@
+#To be executed in Kali Terminal
+
+
 1)sudo open /etc/network/interfaces/
 #data to be entered in the file
 # Loopback interface
